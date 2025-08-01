@@ -1,0 +1,12 @@
+{
+  "name": "Flutter Web Dev",
+  "image": "ghcr.io/cirruslabs/flutter:latest",
+  "postCreateCommand": "flutter config --enable-web",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter"
+      ]
+    }
+  }
+}
