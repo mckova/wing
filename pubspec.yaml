@@ -1,0 +1,20 @@
+name: wing
+description: Smart AI dating assistant
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  image_picker: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
