@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_creation_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,7 +31,10 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  // בהמשך נוסיף מעבר למסך הבא
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ProfileCreationScreen()),
+                  );
                 },
                 child: const Text('Get Started'),
               ),
