@@ -27,8 +27,10 @@ class WingApp extends StatelessWidget {
       home: FutureBuilder<bool>(
         future: checkIfProfileCompleted(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator(); // טעינה
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
           }
           return snapshot.data! ? const HomeScreen() : const ProfileSetupScreen();
         },
