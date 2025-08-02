@@ -8,12 +8,25 @@ void main() {
   runApp(const WingApp());
 }
 
-class WingApp extends StatelessWidget {
+class WingApp extends StatefulWidget {
   const WingApp({super.key});
+
+  @override
+  State<WingApp> createState() => _WingAppState();
+}
+
+class _WingAppState extends State<WingApp> {
+  late Future<bool> _profileCompletedFuture;
 
   Future<bool> checkIfProfileCompleted() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('hasCompletedSetup') ?? false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _profileCompletedFuture = checkIfProfileCompleted();
   }
 
   @override
@@ -25,7 +38,7 @@ class WingApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: FutureBuilder<bool>(
-        future: checkIfProfileCompleted(),
+        future: _profileCompletedFuture,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator(); // טעינה
