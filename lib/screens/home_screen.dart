@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const WingChatScreen()));
+                    MaterialPageRoute(builder: (_) => WingChatScreen()));
                 },
                 child: const Text("Chat with Wing"),
               ),
