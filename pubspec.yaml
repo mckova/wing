@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_mlkit_text_recognition: ^0.7.0
+  permission_handler: ^11.0.0
+  flutter_overlay_window: ^0.3.0
 
 dev_dependencies:
   flutter_test:
