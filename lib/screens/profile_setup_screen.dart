@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 
@@ -14,6 +15,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   String name = '';
   String gender = 'Other';
   String lookingFor = 'Any';
+  int age = 0;
 
   final List<String> genders = ['Male', 'Female', 'Other'];
   final List<String> preferences = ['Male', 'Female', 'Both', 'Any'];
@@ -34,6 +36,20 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     ? 'Please enter your name'
                     : null,
                 onSaved: (value) => name = value!,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Age'),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  final parsed = int.tryParse(value ?? '');
+                  if (parsed == null || parsed <= 0) {
+                    return 'Please enter a valid age';
+                  }
+                  return null;
+                },
+                onSaved: (value) => age = int.parse(value!),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
