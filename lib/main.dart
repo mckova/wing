@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'screens/profile_setup_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const WingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WingApp extends StatelessWidget {
+  const WingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+    return MaterialApp(
+      title: 'Wing',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+        useMaterial3: true,
+      ),
+      home: const ProfileSetupScreen(),
     );
   }
 }
-
