@@ -12,6 +12,7 @@ class ProfileSetupScreen extends StatefulWidget {
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
+  int? age;
   String gender = 'Other';
   String lookingFor = 'Any';
 
@@ -30,10 +31,19 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             children: [
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Name'),
-                validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter your name'
-                    : null,
-                onSaved: (value) => name = value!,
+                validator: (value) {
+                  if (value == null || value.trim().length < 2) {
+                    return 'Name must be at least 2 characters';
+                  }
+                  return null;
+                },
+                onSaved: (value) => name = value!.trim(),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Age'),
+                keyboardType: TextInputType.number,
+                onSaved: (value) => age = int.tryParse(value ?? ''),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -66,6 +76,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     _formKey.currentState!.save();
 
                     final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString('name', name);
+                    if (age != null) {
+                      await prefs.setInt('age', age!);
+                    }
+                    await prefs.setString('gender', gender);
+                    await prefs.setString('lookingFor', lookingFor);
                     await prefs.setBool('hasCompletedSetup', true);
 
                     Navigator.pushReplacement(
