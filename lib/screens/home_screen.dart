@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'profile_screen.dart';
+import 'matches_screen.dart';
+import 'activate_wing_screen.dart';
+import 'wing_chat_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,33 +10,45 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      appBar: AppBar(
+        title: const Text('Wing'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Welcome to Wing',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Your smart wingman for modern dating.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, color: Colors.black54),
-              ),
-              const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  // בהמשך נוסיף מעבר למסך הבא
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ProfileScreen()));
                 },
-                child: const Text('Get Started'),
+                child: const Text("My Profile"),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const MatchesScreen()));
+                },
+                child: const Text("My Matches"),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ActivateWingScreen()));
+                },
+                child: const Text("Activate Wing"),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const WingChatScreen()));
+                },
+                child: const Text("Chat with Wing"),
               ),
             ],
           ),
