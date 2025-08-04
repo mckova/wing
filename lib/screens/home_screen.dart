@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
+import '../locale_provider.dart' as locale_provider;
 import 'profile_screen.dart';
 import 'matches_screen.dart';
 import 'activate_wing_screen.dart';
@@ -9,9 +12,24 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wing'),
+        title: Text(localizations.translate('appTitle')),
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.language),
+            onSelected: (code) => locale_provider.updateLocale(Locale(code)),
+            itemBuilder: (context) => AppLocalizations.languageNames.entries
+                .map(
+                  (e) => PopupMenuItem(
+                    value: e.key,
+                    child: Text(e.value),
+                  ),
+                )
+                .toList(),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -21,34 +39,43 @@ class HomeScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                  );
                 },
-                child: const Text("My Profile"),
+                child: Text(localizations.translate('myProfile')),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const MatchesScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MatchesScreen()),
+                  );
                 },
-                child: const Text("My Matches"),
+                child: Text(localizations.translate('myMatches')),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const ActivateWingScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ActivateWingScreen()),
+                  );
                 },
-                child: const Text("Activate Wing"),
+                child: Text(localizations.translate('activateWing')),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const WingChatScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const WingChatScreen()),
+                  );
                 },
-                child: const Text("Chat with Wing"),
+                child: Text(localizations.translate('chatWithWing')),
               ),
             ],
           ),
