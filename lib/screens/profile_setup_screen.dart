@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../l10n/app_localizations.dart';
+import '../locale_provider.dart' as locale_provider;
 import 'home_screen.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
@@ -12,50 +15,77 @@ class ProfileSetupScreen extends StatefulWidget {
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
-  String gender = 'Other';
-  String lookingFor = 'Any';
+  String gender = 'other';
+  String lookingFor = 'any';
+  String languageCode = locale_provider.localeNotifier.value.languageCode;
 
-  final List<String> genders = ['Male', 'Female', 'Other'];
-  final List<String> preferences = ['Male', 'Female', 'Both', 'Any'];
+  final List<String> genders = ['male', 'female', 'other'];
+  final List<String> preferences = ['male', 'female', 'both', 'any'];
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Set up your profile")),
+      appBar: AppBar(title: Text(localizations.translate('setupProfile'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
+              DropdownButtonFormField<String>(
+                decoration:
+                    InputDecoration(labelText: localizations.translate('language')),
+                value: languageCode,
+                items: AppLocalizations.languageNames.entries
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.key,
+                        child: Text(e.value),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() => languageCode = value!);
+                  locale_provider.updateLocale(Locale(value!));
+                },
+              ),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration:
+                    InputDecoration(labelText: localizations.translate('nameLabel')),
                 validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter your name'
+                    ? localizations.translate('nameValidation')
                     : null,
                 onSaved: (value) => name = value!,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Your gender'),
+                decoration:
+                    InputDecoration(labelText: localizations.translate('genderLabel')),
                 value: gender,
                 items: genders
-                    .map((g) => DropdownMenuItem(
-                          value: g,
-                          child: Text(g),
-                        ))
+                    .map(
+                      (g) => DropdownMenuItem(
+                        value: g,
+                        child: Text(localizations.translate(g)),
+                      ),
+                    )
                     .toList(),
                 onChanged: (value) => setState(() => gender = value!),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Looking for'),
+                decoration: InputDecoration(
+                    labelText: localizations.translate('lookingForLabel')),
                 value: lookingFor,
                 items: preferences
-                    .map((p) => DropdownMenuItem(
-                          value: p,
-                          child: Text(p),
-                        ))
+                    .map(
+                      (p) => DropdownMenuItem(
+                        value: p,
+                        child: Text(localizations.translate(p)),
+                      ),
+                    )
                     .toList(),
                 onChanged: (value) => setState(() => lookingFor = value!),
               ),
@@ -76,7 +106,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     );
                   }
                 },
-                child: const Text('Continue'),
+                child: Text(localizations.translate('continue')),
               )
             ],
           ),
